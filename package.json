@@ -1,7 +1,7 @@
 {
   "name": "team-profile-generator-m10",
   "version": "1.0.0",
-  "description": "",
+  "description": "AS A manager  \r I WANT to generate a webpage that displays my team's basic info  \r SO THAT I have quick access to their emails and GitHub profiles",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,5 +19,9 @@
   "dependencies": {
     "inquirer": "^8.2.4",
     "jest": "^29.3.1"
-  }
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {}
 }

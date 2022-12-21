@@ -3,23 +3,21 @@ const fs = require("fs");
 const inquirer = require("inquirer");
 const generateHTML = require('./src/generateHTML.js');
 
-//Employee classes
-const Employee = require("./lib/Employee");
+//Employee type classes
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 
-// Initialize a new Employee name object
-const Employee = new Employee();
+
 const teamRoster = [];
 
 // WHEN I start the application
 // THEN I am prompted to enter the team manager’s name, employee ID, email address, and office number
-
 const addManager = () => {
     console.log("Hello team manager! Let's start building your team's profile page. Let's start with your own information.");
     return inquirer.prompt ([
         {
+        type: "input",
         message: "Please enter your full name.",
         name: 'name',
         // validate not blank
@@ -42,87 +40,73 @@ const addManager = () => {
         // validate not blank
         },
     ])
-    .then((managerInfo) => {
+    // Saves input and adds manager variable to the team
+    .then(managerInfo => {
         const {name, id, email, officeNumber} = managerInfo;
         const manager = new Manager(name, id, email, officeNumber);
         teamRoster.push(manager);
     })
-}
+};
 
 // WHEN I enter the team manager’s name, employee ID, email address, and office number
 // THEN I am presented with a menu with the option to add an engineer or an intern or to finish building my team
 const addEmployee = () => {
     return inquirer.prompt([
         {
-        type: "list";
-        message: "Do you want to keep adding employess to this page?";
-        choices:[
-            "Yes, add an Engineer.",
-            "Yes, add an Intern.",
-            "No, lets build the team profile page!"
-        ]},
-        {
-        message: "Please enter the employee's name.";
-        name: "name"
+            type: "list",
+            message: "Do you want to keep adding employess to this page?",
+            choices:[
+                "Yes, add an Engineer.",
+                "Yes, add an Intern.",
+                "No, lets build the team profile page!"
+            ]
         },
         {
-        message: "Please enter the employee's ID number.";
-        name: "id"
+            message: "Please enter the employee's name.",
+            name: "name"
         },
         {
-        message: "Please enter the employee's email address.";
-        name: "email"
+            message: "Please enter the employee's ID number.",
+            name: "id"
         },
         {
-        message: "Please enter the employee's email address.";
-        name: "email"
-            },
+            message: "Please enter the employee's email address.",
+            name: "email"
+        },
+        // WHEN I select the engineer option
+        // THEN I am prompted to enter the engineer’s name, ID, email, and GitHub username,
+        {
+            message: "Please enter the Engineer's GitHub username.",
+            name: "github",
+            when: (input) => input.role === "Engineer"
+        },
+        // WHEN I select the intern option
+        // THEN I am prompted to enter the intern’s name, ID, email, and school,
+        {
+            message: "Please enter the Intern's school.",
+            name: "email",
+            when: (input) => input.role === "Intern"
+        }
     ])
 }
-
-// WHEN I select the engineer option
-// THEN I am prompted to enter the engineer’s name, ID, email, and GitHub username, and I am taken back to the menu
-const engineerQuestions = [
-    {   type: 'input',
-        message: "Please enter the Engineer's name.",
-        name: 'engineer-name',
-        validate: nameInput => {
-            if (nameInput) {
-                return true;
-            } else {
-                console.log ("Manager name cannot be blank");
-                return false; 
-            }
-        }
-    },
-    {   type: 'input',
-        message: "Please enter team manager's employee ID.",
-        name: 'engineer-id',
-        validate: nameInput => {
-            if  (isNaN(nameInput)) {
-                console.log ("Please only enter numerical values")
-                return false; 
-            } else {
-                return true;
-            }
-        }
-    },
-    {   type: 'input',
-        message: "Please enter team manager's email address.",
-        name: 'manager-email',
-        // check that email is valid
-    },
-    {   type: 'input',
-        message: "Please enter team manager's office number.",
-        name: 'manager-office',
-    }
-];
-
-// WHEN I select the intern option
-// THEN I am prompted to enter the intern’s name, ID, email, and school, and I am taken back to the menu
-
 // WHEN I decide to finish building my team
 // THEN I exit the application, and the HTML is generated
+const writeHTML = data => {
+    fs.writeFile('./dist/index.html', data, err => 
+        err ? console.log(err) : console.log(' Team Profile HTML Webpage successfully generated!')
+    );
+}
 
-// Init app
-// app.init();
+// and I am taken back to the menu 
+// funtion to init app
+addManager()
+  .then(addEmployee)
+  .then(teamRoster => {
+    return writeHTML(teamRoster);
+  })
+  .then(pageHTML => {
+    return writeFile(pageHTML);
+  })
+  .catch(err => {
+    console.log(err);
+  });
