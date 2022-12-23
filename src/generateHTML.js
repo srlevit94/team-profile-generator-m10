@@ -6,9 +6,9 @@ const generateManagerCard = (data) => {
     <div class="card mx-auto m-3" style="width: 18rem">
             <h5 class="card-header">Manager Name: ${data.getName()}<br /><br />Role: Manager </h5>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID:${data.getId()}</li>
-                    <li class="list-group-item">Email:${data.getEmail()}</li>
-                    <li class="list-group-item">Office #:${data.officeNumber}</li>
+                    <li class="list-group-item">ID: ${data.getId()}</li>
+                    <li class="list-group-item">Email: ${data.getEmail()}</li>
+                    <li class="list-group-item">Office #: ${data.officeNumber}</li>
                 </ul>
     </div>
     `;
@@ -17,11 +17,11 @@ const generateManagerCard = (data) => {
 const generateEngineerCard = (data) => {
     return `
     <div class="card mx-auto m-3" style="width: 18rem">
-            <h5 class="card-header">Name:${data.getName()}<br /><br />Role: ${data.getRole()}</h5>
+            <h5 class="card-header">Name: ${data.getName()}<br /><br />Role: ${data.getRole()}</h5>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID:${data.getId()}</li>
-                    <li class="list-group-item">Email:${data.getEmail()}</li>
-                    <li class="list-group-item">Github Username:${data.github}</li>
+                    <li class="list-group-item">ID: ${data.getId()}</li>
+                    <li class="list-group-item">Email: ${data.getEmail()}</li>
+                    <li class="list-group-item">Github Username: ${data.github}</li>
                 </ul>
     </div>
     `;
@@ -32,9 +32,9 @@ const generateInternCard = (data) => {
     <div class="card mx-auto m-3" style="width: 18rem">
             <h5 class="card-header">Name:${data.getName()}<br /><br />Role: ${data.getRole()} </h5>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID:${data.getId()}</li>
-                    <li class="list-group-item">Email:${data.getId()}</li>
-                    <li class="list-group-item">School:${data.getId()}</li>
+                    <li class="list-group-item">ID: ${data.getId()}</li>
+                    <li class="list-group-item">Email: ${data.getId()}</li>
+                    <li class="list-group-item">School: ${data.getId()}</li>
                 </ul>
     </div>
     `
@@ -45,28 +45,33 @@ const makeCards = data => {
 
     //stores HTML for cards
     let cardList = '';
+    console.log('makeCards is running')
     
     // generates HTML based on responses and adds to cardList variable
     for (i=0 ; i < data.length; i++) {
         console.log("data");
-        console.log(data[i])
+        // console.log(data[i])
     
         if (data[i].getRole() === 'Manager') {
             cardList += generateManagerCard(data[i]);
+            console.log('manager card made');
         }
         else if (data[i].getRole()  === 'Intern'){
             cardList += generateInternCard(data[i]);
+            console.log('intern card made');
         }
         else if (data[i].getRole()  === 'Engineer') {
             cardList += generateEngineerCard(data[i]);
+            console.log('engineer card made');
         }
     }
     //confirms final list to console
     console.log(cardList);
-    return cardList
+    console.log('cardList ran');
+    return cardList;
 }
  // writes main HTML to store cards in
-const generateHTML = async (data) => {   
+const generateHTML = (data) => {  
     return`
     <!DOCTYPE html>
         <html lang="en">
@@ -86,28 +91,10 @@ const generateHTML = async (data) => {
     ${makeCards(data)}
     </div>
     </body>
-</html> 
-`;
-
-}
-
-    
-const writeFile = data => {
-    const finalHTML = generateHTML(data)
-    fs.writeFile('./index.html', finalHTML, err => {
-        if (err) {
-            console.log(err);
-            return;
-        } else {
-            console.log("Your team page has been created.")
-        }
-    })  
+    </html> 
+    `
     
 };
-
-
-
-// .then writeFile();
 
 
 module.exports = generateHTML

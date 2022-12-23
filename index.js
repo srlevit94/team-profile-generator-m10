@@ -12,7 +12,7 @@ const Manager = require("./lib/Manager");
 const teamRoster = [];
 
 // manager questions
-const addManager = async () => {
+const addManager = () => {
     console.log("Hello team manager! Let's start building your team's profile page. Let's start with your own information.");
     return inquirer.prompt ([
         {
@@ -40,8 +40,8 @@ const addManager = async () => {
         },
     ])
     // Saves input and adds manager variable to the team
-    .then(managerInfo => { 
-        const { name, id, email, officeNumber } = managerInfo;
+    .then(data => { 
+        const { name, id, email, officeNumber } = data;
         const employee = new Manager (name, id, email, officeNumber);
         teamRoster.push(employee);
         console.log(employee);
@@ -101,16 +101,16 @@ const addEmployee = async () => {
 
     // push employee info to TeamRoster array
     // saves info depending on class
-    .then(employeeInfo => {
-        console.log(employeeInfo);
-        if (employeeInfo.role === "Engineer") {
-            const { name, id, email, github} = employeeInfo;
+    .then(data => {
+        console.log(data);
+        if (data.role === "Engineer") {
+            const { name, id, email, github} = data;
             const engineer = new Engineer (name, id, email, github);
             teamRoster.push(engineer);
             console.log(teamRoster);
 
-        } else if (employeeInfo.role === "Intern") {
-            const { name, id, email, school } = employeeInfo;
+        } else if (data.role === "Intern") {
+            const { name, id, email, school } = data;
             const intern = new Intern (name, id, email, school);
             teamRoster.push(intern);
             console.log(teamRoster);
@@ -120,12 +120,21 @@ const addEmployee = async () => {
         if (addEmployee.addMore) {
             return addEmployee(teamRoster); 
         } else {
-            return generateHTML(teamRoster)
-            };
+            return;
         }
-    )}
+    })
+    .then(() => {
+        fs.writeFile("./dist/index.html", generateHTML(teamRoster), (err) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log("Your team page has been generated!");
+          }
+        });
+      });
+};
             
 
 //initiate function
 addManager()
-
+// .then(writetoHTML(data));
