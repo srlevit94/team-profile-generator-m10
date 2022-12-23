@@ -7,7 +7,6 @@ const generateHTML = require('./src/generateHTML.js');
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
-const Employee = require('./lib/employee');
 
 
 const teamRoster = [];
@@ -42,11 +41,12 @@ const addManager = () => {
         },
     ])
     // Saves input and adds manager variable to the team
-    .then((managerInfo) => { 
-        const manager = new Manager (managerInfo.name, managerInfo.id, managerInfo.email, managerInfo.officeNumber);
-        teamRoster.push(manager);
-        console.log(manager);
-        return addEmployee();
+    .then(managerInfo => { 
+        const { name, id, email, officeNumber } = managerInfo;
+        const employee = new Manager (name, id, email, officeNumber);
+        teamRoster.push(employee);
+        console.log(employee);
+        addEmployee();
     })
 };
 
@@ -57,25 +57,28 @@ const addEmployee = () => {
     return inquirer.prompt([
         {
             type: "list",
-            message: "Do you want to keep adding employess to this page?",
+            message: "Which employee role do you wish to add next?",
             name: "role",
             choices:[
-                "Yes, add an Engineer.",
-                "Yes, add an Intern.",
-                "No, lets build the team profile page!"
+                "Engineer",
+                "Intern",
+                "None"
             ]
         },
         {
             message: "Please enter the employee's name.",
-            name: "name"
+            name: "name",
+            when: (input) => input.role !== "None"
         },
         {
             message: "Please enter the employee's ID number.",
-            name: "id"
+            name: "id",
+            when: (input) => input.role !== "None"
         },
         {
             message: "Please enter the employee's email address.",
-            name: "email"
+            name: "email",
+            when: (input) => input.role !== "None"
         },
         // WHEN I select the engineer option
         // THEN I am prompted to enter the engineer’s name, ID, email, and GitHub username,
@@ -88,57 +91,43 @@ const addEmployee = () => {
         // THEN I am prompted to enter the intern’s name, ID, email, and school,
         {
             message: "Please enter the Intern's school.",
-            name: "email",
+            name: "school",
             when: (input) => input.role === "Intern"
         },
         {
             type: 'confirm',
             name: 'addMore',
             message: 'Would you like to add more team members?',
-            default: false
+            when: (input) => input.role !== "None"
         }
     ])
 
-    .then((employeeInfo) => {
-        let employee = "";
 
-        if (addEmployee.role === "Yes, add an Engineer.") {
-            employee = new Engineer (employeeInfo.name, employeeInfo.id, employeeInfo.email, employeeInfo.github);
+    .then(employeeInfo => {
+
+        if (addEmployee.role === "Engineer.") {
+            const { name, id, email, github} = employeeInfo;
+            employee = new Engineer (name, id, email, github);
+            teamRoster.push(employee);
             console.log(employee);
 
-        } else if (addEmployee.role === "Yes, add an Intern.") {
-            employee = new Intern (employeeInfo.name, employeeInfo.id, employeeInfo.email, employeeInfo.school);
+        } else if (addEmployee.role === "Intern.") {
+            const { name, id, email, school } = internInfo;
+            employee = new Intern (name, id, email, school);
+            teamRoster.push(employee);
             console.log(employee);
         }
 
-        teamRoster.push(employee); 
-        console.log(employee);
 
         if (addEmployee.addMore) {
             return addEmployee(teamRoster); 
         } else {
-            return writeHTML(teamRoster);
+            return generateHTML(teamRoster);
         }
     })
-}
-// WHEN I decide to finish building my team
-// THEN I exit the application, and the HTML is generated
-const writeHTML = data => {
-    fs.writeFile('./dist/index.html', data, err => 
-        err ? console.log(err) : console.log(' Team Profile HTML Webpage successfully generated!')
-    );
+            
 }
 
-// and I am taken back to the menu 
-// funtion to init app
 addManager()
-//   .then(addEmployee)
-//   .then(teamRoster => {
-//     return writeHTML(teamRoster);
-//   })
-//   .then(pageHTML => {
-//     return writeFile(pageHTML);
-//   })
-//   .catch(err => {
-//     console.log(err);
-//   });
+
+
