@@ -4,10 +4,10 @@ const fs = require("fs");
 const generateManagerCard = (data) => {
     return `
     <div class="card mx-auto m-3" style="width: 18rem">
-            <h5 class="card-header">Manager Name${data.getName()}<br /><br />Role: Manager </h5>
+            <h5 class="card-header">Manager Name: ${data.getName()}<br /><br />Role: Manager </h5>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID:${data.id}</li>
-                    <li class="list-group-item">Email:${data.email}</li>
+                    <li class="list-group-item">ID:${data.getId()}</li>
+                    <li class="list-group-item">Email:${data.getEmail()}</li>
                     <li class="list-group-item">Office #:${data.officeNumber}</li>
                 </ul>
     </div>
@@ -19,8 +19,8 @@ const generateEngineerCard = (data) => {
     <div class="card mx-auto m-3" style="width: 18rem">
             <h5 class="card-header">Name:${data.getName()}<br /><br />Role: ${data.getRole()}</h5>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID:${data.id}</li>
-                    <li class="list-group-item">Email:${data.email}</li>
+                    <li class="list-group-item">ID:${data.getId()}</li>
+                    <li class="list-group-item">Email:${data.getEmail()}</li>
                     <li class="list-group-item">Github Username:${data.github}</li>
                 </ul>
     </div>
@@ -32,20 +32,24 @@ const generateInternCard = (data) => {
     <div class="card mx-auto m-3" style="width: 18rem">
             <h5 class="card-header">Name:${data.getName()}<br /><br />Role: ${data.getRole()} </h5>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID:${data.id}</li>
-                    <li class="list-group-item">Email:${employee.email}</li>
-                    <li class="list-group-item">School:${employee.school}</li>
+                    <li class="list-group-item">ID:${data.getId()}</li>
+                    <li class="list-group-item">Email:${data.getId()}</li>
+                    <li class="list-group-item">School:${data.getId()}</li>
                 </ul>
     </div>
     `
 };
 
+// adds HTML based on Role tpye
 const makeCards = data => {
 
+    //stores HTML for cards
     let cardList = '';
     
+    // generates HTML based on responses and adds to cardList variable
     for (i=0 ; i < data.length; i++) {
-        // console.log(data[i])
+        console.log("data");
+        console.log(data[i])
     
         if (data[i].getRole() === 'Manager') {
             cardList += generateManagerCard(data[i]);
@@ -57,11 +61,12 @@ const makeCards = data => {
             cardList += generateEngineerCard(data[i]);
         }
     }
+    //confirms final list to console
     console.log(cardList);
-    return cardList;
+    return cardList
 }
-
-const generateHTML = (data) => {   
+ // writes main HTML to store cards in
+const generateHTML = async (data) => {   
     return`
     <!DOCTYPE html>
         <html lang="en">
@@ -87,10 +92,22 @@ const generateHTML = (data) => {
 }
 
     
+const writeFile = data => {
+    const finalHTML = generateHTML(data)
+    fs.writeFile('./index.html', finalHTML, err => {
+        if (err) {
+            console.log(err);
+            return;
+        } else {
+            console.log("Your team page has been created.")
+        }
+    })  
+    
+};
 
 
-// fs.writeFile('./dist/index.html', generateHTML(), function (err) {
-//     err ? console.log(err) : console.log('HTML Saved!');
-// });
+
+// .then writeFile();
+
 
 module.exports = generateHTML
