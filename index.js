@@ -60,42 +60,35 @@ const addEmployee = async () => {
             choices:[
                 "Engineer",
                 "Intern",
-                "None"
+                "None, build my page!"
             ]
         },
         {
             message: "Please enter the employee's name.",
             name: "name",
-            when: (input) => input.role !== "None"
+            when: (data) => data.role !== "None, build my page!"
         },
         {
             message: "Please enter the employee's ID number.",
             name: "id",
-            when: (input) => input.role !== "None"
+            when: (data) => data.role !== "None, build my page!"
         },
         {
             message: "Please enter the employee's email address.",
             name: "email",
-            when: (input) => input.role !== "None"
+            when: (data) => data.role !== "None, build my page!"
         },
         // unique to engineer
         {
             message: "Please enter the Engineer's GitHub username.",
             name: "github",
-            when: (input) => input.role === "Engineer"
+            when: (data) => data.role === "Engineer"
         },
         // unique to Intern
         {
             message: "Please enter the Intern's school.",
             name: "school",
-            when: (input) => input.role === "Intern"
-        },
-        // addMore employees question
-        {
-            type: 'confirm',
-            name: 'addMore',
-            message: 'Would you like to add more team members?',
-            when: (input) => input.role !== "None"
+            when: (data) => data.role === "Intern"
         }
     ])
 
@@ -108,33 +101,29 @@ const addEmployee = async () => {
             const engineer = new Engineer (name, id, email, github);
             teamRoster.push(engineer);
             console.log(teamRoster);
+            addEmployee(teamRoster);
 
         } else if (data.role === "Intern") {
             const { name, id, email, school } = data;
             const intern = new Intern (name, id, email, school);
             teamRoster.push(intern);
             console.log(teamRoster);
-        }
-
+            addEmployee(teamRoster);
+        } else if (data.role === "None, build my page!") {
+            fs.writeFile("./dist/index.html", generateHTML(teamRoster), (err) => {
+                if (err) {
+                  console.log(err);
+                } else {
+                  console.log("Your team page has been generated!");
+                }
+              });
+        } 
         // repeats function , or starts writing HTML
-        if (addEmployee.addMore) {
-            return addEmployee(teamRoster); 
-        } else {
-            return;
-        }
     })
-    .then(() => {
-        fs.writeFile("./dist/index.html", generateHTML(teamRoster), (err) => {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log("Your team page has been generated!");
-          }
-        });
-      });
 };
             
 
 //initiate function
 addManager()
+
 // .then(writetoHTML(data));
