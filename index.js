@@ -95,7 +95,6 @@ const addEmployee = async () => {
     // push employee info to TeamRoster array
     // saves info depending on class
     .then(data => {
-        console.log(data);
         if (data.role === "Engineer") {
             const { name, id, email, github} = data;
             const engineer = new Engineer (name, id, email, github);
@@ -114,7 +113,7 @@ const addEmployee = async () => {
                 if (err) {
                   console.log(err);
                 } else {
-                  console.log("Your team page has been generated!");
+                  console.log("Check the dist folder for your HTML written as index.html!");
                 }
               });
         } 

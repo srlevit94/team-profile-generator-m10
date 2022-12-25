@@ -44,30 +44,21 @@ const generateInternCard = (data) => {
 const makeCards = data => {
 
     //stores HTML for cards
-    let cardList = '';
-    console.log('makeCards is running')
-    
+    let cardList = '';    
     // generates HTML based on responses and adds to cardList variable
     for (i=0 ; i < data.length; i++) {
-        console.log("data");
         // console.log(data[i])
     
         if (data[i].getRole() === 'Manager') {
             cardList += generateManagerCard(data[i]);
-            console.log('manager card made');
         }
         else if (data[i].getRole()  === 'Intern'){
             cardList += generateInternCard(data[i]);
-            console.log('intern card made');
         }
         else if (data[i].getRole()  === 'Engineer') {
             cardList += generateEngineerCard(data[i]);
-            console.log('engineer card made');
         }
     }
-    //confirms final list to console
-    console.log(cardList);
-    console.log('cardList ran');
     return cardList;
 }
  // writes main HTML to store cards in
