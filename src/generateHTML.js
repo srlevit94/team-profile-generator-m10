@@ -4,7 +4,7 @@ const fs = require("fs");
 const generateManagerCard = (data) => {
     return `
     <div class="card mx-auto m-3" style="width: 18rem">
-            <h5 class="card-header">Manager Name: ${data.getName()}<br /><br />Role: Manager </h5>
+            <h5 class="card-header">Name: ${data.getName()}<br /><br />Role: ${data.getRole()} </h5>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">ID: ${data.getId()}</li>
                     <li class="list-group-item">Email: ${data.getEmail()}</li>
@@ -33,14 +33,14 @@ const generateInternCard = (data) => {
             <h5 class="card-header">Name:${data.getName()}<br /><br />Role: ${data.getRole()} </h5>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">ID: ${data.getId()}</li>
-                    <li class="list-group-item">Email: ${data.getId()}</li>
-                    <li class="list-group-item">School: ${data.getId()}</li>
+                    <li class="list-group-item">Email: ${data.getEmail()}</li>
+                    <li class="list-group-item">School: ${data.getSchool()}</li>
                 </ul>
     </div>
     `
 };
 
-// adds HTML based on Role tpye
+// adds HTML for cards based on Role tpye
 const makeCards = data => {
 
     //stores HTML for cards

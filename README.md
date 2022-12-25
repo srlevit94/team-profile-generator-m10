@@ -1,35 +1,26 @@
-# team-profile-generator-m10
+# Team Profile HTML Page Generator  
+  ## Description
+  This application asks a manager to put their and their team's information. Then, it populates into a HTML page that neatly distributes their information to cards on a page. 
 
-## User Story 
+  ## Table of Contents
+  * [Installation](#Installation)
+  * [Usage](#Usage)
+  * [License](#license)
+  * [Contributing](#Contributing)
+  * [Tests](#Tests)
+  * [Questions](#Questions)
+  ***
 
-AS A manager  
-I WANT to generate a webpage that displays my team's basic info  
-SO THAT I have quick access to their emails and GitHub profiles  
+  ## Installation
+  After cloning the repository and getting into the main directory, "npm install" . Then type in "node ." into the CLI to start the application.
 
-## Acceptance Criteria
+  ## Usage
+  Answer the prompted questions about each team member (yourself as the manager, engineers, and interns). Then, check the "dist" folder for the output! A walkthrough video can be found in the "assets" folder. 
 
-GIVEN a command-line application that accepts user input  
-
-WHEN I am prompted for my team members and their information  
-THEN an HTML file is generated that displays a nicely formatted team roster based on user input  
-
-WHEN I click on an email address in the HTML  
-THEN my default email program opens and populates the TO field of the email with the address  
-
-WHEN I click on the GitHub username  
-THEN that GitHub profile opens in a new tab  
-
-WHEN I start the application  
-THEN I am prompted to enter the team manager’s name, employee ID, email address, and office number  
-
-WHEN I enter the team manager’s name, employee ID, email address, and office number  
-THEN I am presented with a menu with the option to add an engineer or an intern or to finish building my team  
-
-WHEN I select the engineer option  
-THEN I am prompted to enter the engineer’s name, ID, email, and GitHub username, and I am taken back to the menu  
-
-WHEN I select the intern option  
-THEN I am prompted to enter the intern’s name, ID, email, and school, and I am taken back to the menu  
-
-WHEN I decide to finish building my team  
-THEN I exit the application, and the HTML is generated  
+  ## Licenses
+    This project is covered under the MIT license.
+  
+  ## Questions
+  If you have any questions about the project you can reach out to me via email or GitHub with the information below. 
+  >Email: srlevit94@gmail.com 
+  >GitHub : srlevit94 : (https://github.com/srlevit94)

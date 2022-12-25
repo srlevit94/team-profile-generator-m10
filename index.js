@@ -95,6 +95,7 @@ const addEmployee = async () => {
     // push employee info to TeamRoster array
     // saves info depending on class
     .then(data => {
+        // repeats function , or starts writing HTML
         if (data.role === "Engineer") {
             const { name, id, email, github} = data;
             const engineer = new Engineer (name, id, email, github);
@@ -117,7 +118,7 @@ const addEmployee = async () => {
                 }
               });
         } 
-        // repeats function , or starts writing HTML
+     
     })
 };
             

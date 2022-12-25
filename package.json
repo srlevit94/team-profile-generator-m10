@@ -4,7 +4,7 @@
   "description": "AS A manager  \r I WANT to generate a webpage that displays my team's basic info  \r SO THAT I have quick access to their emails and GitHub profiles",
   "main": "index.js",
   "scripts": {
-    "test": "jest" 
+    "test": "jest"
   },
   "repository": {
     "type": "git",
