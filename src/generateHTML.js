@@ -7,7 +7,7 @@ const generateManagerCard = (data) => {
             <h5 class="card-header">Name: ${data.getName()}<br /><br />Role: ${data.getRole()} </h5>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">ID: ${data.getId()}</li>
-                    <li class="list-group-item">Email: ${data.getEmail()}</li>
+                    <li class="list-group-item">Email: <a href="mailto:${data.getEmail()}">${data.getEmail()}</a></li>
                     <li class="list-group-item">Office #: ${data.officeNumber}</li>
                 </ul>
     </div>
@@ -20,8 +20,8 @@ const generateEngineerCard = (data) => {
             <h5 class="card-header">Name: ${data.getName()}<br /><br />Role: ${data.getRole()}</h5>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">ID: ${data.getId()}</li>
-                    <li class="list-group-item">Email: ${data.getEmail()}</li>
-                    <li class="list-group-item">Github Username: ${data.github}</li>
+                    <li class="list-group-item">Email: <a href="mailto:${data.getEmail()}">${data.getEmail()}</a></li>
+                    <li class="list-group-item">Github Username: <a href="https://github.com/${data.github}">${data.github}</a></li>
                 </ul>
     </div>
     `;
@@ -33,7 +33,7 @@ const generateInternCard = (data) => {
             <h5 class="card-header">Name:${data.getName()}<br /><br />Role: ${data.getRole()} </h5>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">ID: ${data.getId()}</li>
-                    <li class="list-group-item">Email: ${data.getEmail()}</li>
+                    <li class="list-group-item">Email: <a href="mailto:${data.getEmail()}">${data.getEmail()}</a></li>
                     <li class="list-group-item">School: ${data.getSchool()}</li>
                 </ul>
     </div>

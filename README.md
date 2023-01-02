@@ -14,6 +14,8 @@
   ## Installation
   After cloning the repository and getting into the main directory, "npm install" . Then type in "node ." into the CLI to start the application.
 
+  See a full walkthrough video at the link here: https://watch.screencastify.com/v/DXMf8fueWbm0qa6CpF6g
+
   ## Usage
   Answer the prompted questions about each team member (yourself as the manager, engineers, and interns). Then, check the "dist" folder for the output! A walkthrough video can be found in the "assets" folder. 
 
